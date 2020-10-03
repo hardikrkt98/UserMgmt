@@ -156,6 +156,14 @@ public class User implements Serializable {
         return isActive;
     }
 
+    public boolean isNotLocked() {
+        return isNotLocked;
+    }
+
+    public void setNotLocked(boolean notLocked) {
+        isNotLocked = notLocked;
+    }
+
     public void setActive(boolean active) {
         isActive = active;
     }
@@ -164,6 +172,7 @@ public class User implements Serializable {
     private String[] roles;  //ROLE_USER ROLE_ADMIN
     private String[] authorities;
     private boolean isActive;
+    private boolean isNotLocked;
 
 
 
