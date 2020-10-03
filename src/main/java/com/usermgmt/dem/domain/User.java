@@ -1,9 +1,11 @@
 package com.usermgmt.dem.domain;
 
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Generated;
-import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,12 +13,11 @@ import java.util.Date;
 
 
 //serializable means the object can be converted to bytes stream of data
-@Entity
+@Document(collection = "users")
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
+
     private Long id;
     private String userId;
     private String firstName;
