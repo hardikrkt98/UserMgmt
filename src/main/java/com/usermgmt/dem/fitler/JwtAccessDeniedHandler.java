@@ -4,38 +4,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.usermgmt.dem.constants.SecurityConstant;
 import com.usermgmt.dem.domain.HttpResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.Security;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
 @Component
-public class JwtAuthenticationEntryPoint  extends Http403ForbiddenEntryPoint {
-
-    HttpResponse httpResponse = new HttpResponse(HttpStatus.FORBIDDEN.value(),HttpStatus.FORBIDDEN,HttpStatus.FORBIDDEN.getReasonPhrase().toUpperCase(), SecurityConstant.FORBIDDEN_MESSAGE);
+public class JwtAccessDeniedHandler implements AccessDeniedHandler {
+    HttpResponse httpResponse = new HttpResponse(HttpStatus.UNAUTHORIZED.value(),HttpStatus.UNAUTHORIZED,HttpStatus.UNAUTHORIZED.getReasonPhrase().toUpperCase(), SecurityConstant.ACCESS_DENIED_MESSAGE);
 
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, AccessDeniedException exception) throws IOException, ServletException {
 
         response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
         OutputStream outputStream  = response.getOutputStream();
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(outputStream,httpResponse);
+        objectMapper.writeValue(outputStream,response);
         outputStream.flush();
-
-
-
     }
-
-
 }
