@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Service
 @Transactional
-@Qualifier("User Details Service")
+@Qualifier("UserDetailsService")
 public class UserServiceImpl  implements Userservice,UserDetailsService,,{
     @Autowired
     private UserRepository userRepository;

@@ -14,5 +14,4 @@ User findByUsername(String username);
 User findByEmail(String email);
 
 
-
 }
