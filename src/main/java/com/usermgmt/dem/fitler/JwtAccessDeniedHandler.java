@@ -19,17 +19,17 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
-    HttpResponse httpResponse = new HttpResponse(HttpStatus.UNAUTHORIZED.value(),HttpStatus.UNAUTHORIZED,HttpStatus.UNAUTHORIZED.getReasonPhrase().toUpperCase(), SecurityConstant.ACCESS_DENIED_MESSAGE);
 
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, AccessDeniedException exception) throws IOException, ServletException {
+        HttpResponse httpResponse = new HttpResponse(HttpStatus.UNAUTHORIZED.value(),HttpStatus.UNAUTHORIZED,HttpStatus.UNAUTHORIZED.getReasonPhrase().toUpperCase(), SecurityConstant.ACCESS_DENIED_MESSAGE);
 
         response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         OutputStream outputStream  = response.getOutputStream();
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(outputStream,response);
+        objectMapper.writeValue(outputStream,httpResponse);
         outputStream.flush();
     }
 }

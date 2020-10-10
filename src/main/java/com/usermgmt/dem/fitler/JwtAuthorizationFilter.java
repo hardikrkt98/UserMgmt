@@ -32,7 +32,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
-        if(httpServletRequest.getMethod().equalsIgnoreCase(OPTIONS_HTTP_METHOD))
+        if(httpServletRequest.getMethod().equalsIgnoreCase(OPTIONS_HTTP_METHOD)) //OPTION REQUEST IS TO CHECK INFORMATION OF SERVER . THE KIND OF REQUEST THAT SERVER ACCEPTS
         {
             httpServletResponse.setStatus(HttpStatus.OK.value());
 
@@ -41,26 +41,21 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         else
         {
           String authorizartionHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-          if(authorizartionHeader==null||!authorizartionHeader.startsWith(SecurityConstant.TOKEN_PREFIX))
-          {
+          if(authorizartionHeader==null||!authorizartionHeader.startsWith(SecurityConstant.TOKEN_PREFIX)) {
               filterChain.doFilter(httpServletRequest,httpServletResponse);
-              return;
-
+              return ;
           }
             String token = authorizartionHeader.substring(TOKEN_PREFIX.length());
             String username = jwtTokenProvider.getSubject(token);
 
-            if(jwtTokenProvider.isTokenValid(username,token)&& SecurityContextHolder.getContext().getAuthentication()==null)
-            {
+            if(jwtTokenProvider.isTokenValid(username,token)&& SecurityContextHolder.getContext().getAuthentication()==null) {
                 List<GrantedAuthority> authorities = jwtTokenProvider.getAuthorities(token);
                 Authentication authentication = jwtTokenProvider.getAuthentication(username,authorities,httpServletRequest);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
 
-            }
-            else
-            {
+            } else {
                 SecurityContextHolder.clearContext();
 
 

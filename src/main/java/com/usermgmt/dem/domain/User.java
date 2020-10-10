@@ -17,7 +17,6 @@ import java.util.Date;
 public class User implements Serializable {
 
     @Id
-
     private String id;
     private String userId;
     private String firstName;

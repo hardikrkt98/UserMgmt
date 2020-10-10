@@ -16,6 +16,14 @@ public class UserResource {
 
     }
 
+    @GetMapping("/error")
+    public  String error(){
+
+        return "Application doesn't works";
+
+
+    }
+
 
 
 }
