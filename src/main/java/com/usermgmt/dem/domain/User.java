@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     @Id
 
-    private Long id;
+    private String id;
     private String userId;
     private String firstName;
     private String lastName;
@@ -32,7 +32,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileUrl, Date lastLoginDate, Date lastLoginDisplay, Date joinDate, String[] roles, String[] authorities, boolean isActive) {
+    public User(String id, String userId, String firstName, String lastName, String username, String password, String email, String profileUrl, Date lastLoginDate, Date lastLoginDisplay, Date joinDate, String[] roles, String[] authorities, boolean isActive) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -49,11 +49,11 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long Id) {
+    public void setId(String Id) {
         id = Id;
     }
 

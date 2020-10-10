@@ -8,8 +8,8 @@ import static java.util.Arrays.stream;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.usermgmt.dem.domain.UserPrincipal;
-import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,8 +31,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JWTTokenProvider {
-
-    @Value("${jwt.secret}") //will come from YAML file
+    @Value("${jwt.secret}")//will come from YAML file
     private String secret;
 
 

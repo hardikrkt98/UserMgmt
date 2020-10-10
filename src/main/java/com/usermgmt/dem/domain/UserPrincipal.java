@@ -1,6 +1,6 @@
 package com.usermgmt.dem.domain;
 
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+//import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

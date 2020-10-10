@@ -10,18 +10,36 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
+
+
 @Service
 @Transactional
-@Qualifier("UserDetailsService")
-public class UserServiceImpl  implements Userservice,UserDetailsService,,{
+@Qualifier("userDetailsService")
+public class UserServiceImpl  implements Userservice,UserDetailsService{
+
+
     @Autowired
     private UserRepository userRepository;
 
+    public UserServiceImpl() {
+    }
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
+
+//    @Autowired
+////    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+////        this.userRepository = userRepository;
+////        this.passwordEncoder = passwordEncoder;
+////    }
 
 
     @Override
