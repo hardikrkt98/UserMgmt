@@ -3,11 +3,11 @@ package com.usermgmt.dem.enumeration;
 import static com.usermgmt.dem.constants.Authority.*;
 
 public enum Role {
-    ROLE_USER(USER_AUTHORITIES,
-    ROLE_USER(HR_AUTHORITIES,
-    ROLE_USER(MANAGER_AUTHORITIES,
-     ROLE_USER(ADMIN_AUTHORITIES,
-     ROLE_USER(SUPER_USER_AUTHORITIES;
+    ROLE_USER(USER_AUTHORITIES),
+    ROLE_HR(HR_AUTHORITIES),
+    ROLE_MANAGER(MANAGER_AUTHORITIES),
+     ROLE_ADMIN(ADMIN_AUTHORITIES),
+     ROLE_SUPER_ADMIN(SUPER_USER_AUTHORITIES);
 
    private String[] authorities;
 
