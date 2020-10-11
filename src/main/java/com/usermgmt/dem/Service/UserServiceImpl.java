@@ -91,6 +91,8 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
      newUser.setProfileUrl(getProfileImageUrl());
      newUser.setFirstName(firstName);
      newUser.setLastName(lastName);
+     newUser.setUsername(userName);
+     newUser.setEmail(email);
      userRepository.save(newUser);
      return newUser;
 
@@ -143,7 +145,7 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
         }
         else
         {
-            User userByUsername = findUserByUsername(currentUsername);
+            User userByUsername = findUserByUsername(newUsername);
             if(userByUsername!=null)
             {
 
@@ -154,7 +156,7 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
             User userByEmail = findUserByEmail(newEmail);
             if(userByEmail!=null)
             {
-                throw new EmailExistException("Username already Exists exception");
+                throw new EmailExistException("Email already Exists exception");
 
 
             }
@@ -173,11 +175,12 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
 
     @Override
     public User findUserByUsername(String username) {
-        return null;
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email);
+
     }
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 @EnableMongoRepositories
 public interface UserRepository extends MongoRepository<User,String> {
 
-User findByUsername(String username);
+    User findByUsername(String s);
 
     @Override
     <S extends User> S save(S s);
