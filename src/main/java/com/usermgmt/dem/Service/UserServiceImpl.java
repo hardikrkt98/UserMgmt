@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +37,9 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private emailService emailService;
 
     public UserServiceImpl() {
     }
@@ -76,11 +80,12 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
     }
 
     @Override
-    public User register(String firstName, String lastName, String userName, String email) throws com.usermgmt.dem.Exceptions.domain.UsernameNotFoundException, EmailExistException, UsernameExistException {
+    public User register(String firstName, String lastName, String userName, String email) throws com.usermgmt.dem.Exceptions.domain.UsernameNotFoundException, EmailExistException, UsernameExistException, MessagingException {
       User user =   validateNewUsernameEmail(StringUtils.EMPTY,userName,email);
       User newUser = new User();
       newUser.setUserId(generateUserId());
       String password = generatePassword();
+      System.out.println(password);
       String encodedPassword = bCryptPasswordEncoder.encode(password);
       newUser.setAuthorities(ROLE_USER.getAuthorities());
       newUser.setRoles(ROLE_USER.name());
@@ -93,7 +98,11 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
      newUser.setLastName(lastName);
      newUser.setUsername(userName);
      newUser.setEmail(email);
+     emailService.sendEmail(email,password);
+
      userRepository.save(newUser);
+
+
      return newUser;
 
     }
