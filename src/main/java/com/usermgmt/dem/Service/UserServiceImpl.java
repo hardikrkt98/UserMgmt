@@ -91,7 +91,8 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
      newUser.setProfileUrl(getProfileImageUrl());
      newUser.setFirstName(firstName);
      newUser.setLastName(lastName);
-     userRepository.save(user);
+     userRepository.save(newUser);
+     return newUser;
 
     }
 
