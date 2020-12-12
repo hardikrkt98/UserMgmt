@@ -42,7 +42,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         {
           String authorizartionHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
           if(authorizartionHeader==null||!authorizartionHeader.startsWith(SecurityConstant.TOKEN_PREFIX)) {
-              filterChain.doFilter(httpServletRequest,httpServletResponse);
+              filterChain.doFilter(httpServletRequest,httpServletResponse);// invoke the rest of application
               return ;
           }
             String token = authorizartionHeader.substring(TOKEN_PREFIX.length());
