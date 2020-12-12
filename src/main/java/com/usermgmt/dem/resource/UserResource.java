@@ -4,8 +4,11 @@ import com.usermgmt.dem.Exceptions.domain.ExceptionHandling;
 import com.usermgmt.dem.Exceptions.domain.UsernameExistException;
 import com.usermgmt.dem.Exceptions.domain.UsernameNotFoundException;
 import com.usermgmt.dem.Service.Userservice;
+import com.usermgmt.dem.domain.ArrayResponse;
 import com.usermgmt.dem.domain.User;
 import com.usermgmt.dem.domain.UserPrincipal;
+import com.usermgmt.dem.domain.arrays;
+import com.usermgmt.dem.repository.ArraysRepository;
 import com.usermgmt.dem.resource.utility.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+
+import java.util.List;
 
 import static com.usermgmt.dem.constants.SecurityConstant.JWT_TOKEN_HEADER;
 
@@ -32,6 +37,9 @@ public class UserResource extends ExceptionHandling {
 
     @Autowired
     private JWTTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private ArraysRepository arraysRepository;
 
 
 
@@ -58,11 +66,25 @@ public class UserResource extends ExceptionHandling {
 
     }
 
+    @GetMapping("/arrays")
+    public ResponseEntity<ArrayResponse> getArraysProblems()
+    {
+        List<arrays> response =  arraysRepository.findAll();
+      ArrayResponse arrayResponse = new ArrayResponse(response);
+        arrayResponse.setArraysList(response);
+
+        return new ResponseEntity<ArrayResponse>(arrayResponse,HttpStatus.OK);
+
+    }
+
 
     @PostMapping("/register")
    public ResponseEntity<User> registerUser(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException, MessagingException {
       User loginUser =   userservice.register(user.getFirstName(),user.getLastName(),user.getUsername(),user.getEmail());
      return new ResponseEntity<User>(loginUser,HttpStatus.OK);
     }
+
+
+
 
 }
