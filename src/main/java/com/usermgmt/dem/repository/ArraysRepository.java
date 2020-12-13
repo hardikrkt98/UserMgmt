@@ -9,6 +9,8 @@ public interface ArraysRepository extends MongoRepository<arrays,String> {
 
 arrays findBy_id (String id);
 
+arrays findBytitle(String title);
+
 
     @Override
     List<arrays> findAll();

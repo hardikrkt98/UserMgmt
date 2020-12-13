@@ -72,8 +72,16 @@ public class UserResource extends ExceptionHandling {
         List<arrays> response =  arraysRepository.findAll();
       ArrayResponse arrayResponse = new ArrayResponse(response);
         arrayResponse.setArraysList(response);
-
         return new ResponseEntity<ArrayResponse>(arrayResponse,HttpStatus.OK);
+    }
+
+    @GetMapping("/problem/{title}")
+    public  ResponseEntity<arrays>getProblemStatement( @PathVariable String title)
+    {
+        arrays response = arraysRepository.findBytitle(title);
+
+        return new ResponseEntity<arrays>(response,HttpStatus.OK);
+
 
     }
 
