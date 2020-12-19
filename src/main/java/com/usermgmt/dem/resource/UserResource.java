@@ -3,11 +3,9 @@ import com.usermgmt.dem.Exceptions.domain.EmailExistException;
 import com.usermgmt.dem.Exceptions.domain.ExceptionHandling;
 import com.usermgmt.dem.Exceptions.domain.UsernameExistException;
 import com.usermgmt.dem.Exceptions.domain.UsernameNotFoundException;
+import com.usermgmt.dem.Service.CodeEvaluator;
 import com.usermgmt.dem.Service.Userservice;
-import com.usermgmt.dem.domain.ArrayResponse;
-import com.usermgmt.dem.domain.User;
-import com.usermgmt.dem.domain.UserPrincipal;
-import com.usermgmt.dem.domain.arrays;
+import com.usermgmt.dem.domain.*;
 import com.usermgmt.dem.repository.ArraysRepository;
 import com.usermgmt.dem.resource.utility.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import static com.usermgmt.dem.constants.SecurityConstant.JWT_TOKEN_HEADER;
@@ -29,8 +28,18 @@ import static com.usermgmt.dem.constants.SecurityConstant.JWT_TOKEN_HEADER;
 @RequestMapping(path = {"/","/user"})
 public class UserResource extends ExceptionHandling {
 
+    private final Userservice userservice;
+
     @Autowired
-    private Userservice userservice;
+    private UserResource(Userservice userservice)
+    {
+        this.userservice = userservice;
+
+    }
+
+    @Autowired
+    private CodeEvaluator codeEvaluator;
+
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -90,6 +99,15 @@ public class UserResource extends ExceptionHandling {
    public ResponseEntity<User> registerUser(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException, MessagingException {
       User loginUser =   userservice.register(user.getFirstName(),user.getLastName(),user.getUsername(),user.getEmail());
      return new ResponseEntity<User>(loginUser,HttpStatus.OK);
+    }
+
+
+    @PostMapping("/{title}/submit")
+    public ResponseEntity<String> submitCode(@RequestBody Code code, @PathVariable String title) throws FileNotFoundException {
+        List<TestCase> testCase = arraysRepository.findBytitle(title).getTestcases();
+        codeEvaluator.evaluateCode(testCase,code);
+        return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+
     }
 
 
