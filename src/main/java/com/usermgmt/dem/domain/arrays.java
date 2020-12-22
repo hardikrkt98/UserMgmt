@@ -17,7 +17,9 @@ import java.util.Map;
 @Document(collection = "arrays")
 public class arrays implements Serializable {
 
-    public String _id;
+    private String _id;
+
+    private String title;
 
     private String problemstatement;
 
