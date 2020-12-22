@@ -45,7 +45,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
               filterChain.doFilter(httpServletRequest,httpServletResponse);// invoke the rest of application
               return ;
           }
-            String token = authorizartionHeader.substring(TOKEN_PREFIX.length());
+            String token = authorizartionHeader.substring(TOKEN_PREFIX.length()+1);
             String username = jwtTokenProvider.getSubject(token);
 
             if(jwtTokenProvider.isTokenValid(username,token)&& SecurityContextHolder.getContext().getAuthentication()==null) {
