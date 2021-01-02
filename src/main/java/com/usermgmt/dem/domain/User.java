@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-
+//Should have bare minimum fields so that any user can be adjusted here, For eg blogger will not have profile-url
 
 //serializable means the object can be converted to bytes stream of data
 @Document(collection = "users")

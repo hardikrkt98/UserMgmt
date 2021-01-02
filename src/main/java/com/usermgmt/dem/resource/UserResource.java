@@ -28,8 +28,19 @@ import static com.usermgmt.dem.constants.SecurityConstant.JWT_TOKEN_HEADER;
 @RequestMapping(path = {"/","/user"})
 public class UserResource extends ExceptionHandling {
 
-    private final Userservice userservice;
+     //Never Program to implementations
+    //Always program to interfaces.
 
+
+    private final Userservice userservice;
+//model is where persistance to db take place
+    //service  deals with business logic.
+
+
+    //we are tellling the spring that when you are creating the object for class userResoure
+    // Resolve the dependancy userservice   create the object
+
+    // if there r multiple implementation of userservice class => IOC comes into picture
     @Autowired
     private UserResource(Userservice userservice)
     {
@@ -53,6 +64,7 @@ public class UserResource extends ExceptionHandling {
 
 
     @PostMapping("/login")
+    //How user object is created ? in request. Java uses reflexion . reflexion is meta-programming technique thats why we need default constructor in User class .Java will create empty object first then populate the fields.
     public ResponseEntity<User> login(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException {
         authenticate(user.getUsername(),user.getPassword());
         User loginUser = userservice.findUserByUsername(user.getUsername());
@@ -111,6 +123,7 @@ public class UserResource extends ExceptionHandling {
     }
 
 
-
+//Dependency injection is ->instead of craeting the objects on your own, class accept the object of required type,
+    //we accept the dependancy .
 
 }

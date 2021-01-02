@@ -7,7 +7,6 @@ import com.usermgmt.dem.domain.UserPrincipal;
 import com.usermgmt.dem.repository.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import static com.usermgmt.dem.enumeration.Role.ROLE_USER;
 
@@ -39,7 +37,7 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private emailService emailService;
+    private NotificationsService notificationsService;
 
     public UserServiceImpl() {
     }
@@ -98,7 +96,7 @@ public class UserServiceImpl  implements Userservice,UserDetailsService{
      newUser.setLastName(lastName);
      newUser.setUsername(userName);
      newUser.setEmail(email);
-     emailService.sendEmail(email,password);
+     notificationsService.sendEmail(email,password);
 
      userRepository.save(newUser);
 
